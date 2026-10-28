@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "a65b6cdf-4140-4096-a561-4df48748c47a",
+		"name": "cinema-orders-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12201400"
+	},
+	"item": [
+		{
+			"name": "create - validationError - 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/{country}/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"{country}",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create - success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"country\": \"MX\",\n    \"cinema_id\": \"472\",\n    \"user_id\": \"user-123\",\n    \"items\": [\n        { \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n        { \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create - success -2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"order_id\": \"1a3bb2e0-8de8-4338-b245-58a3104d6d62\",\n    \"country\": \"MX\",\n    \"cinema_id\": \"472\",\n    \"user_id\": \"user-123\",\n    \"items\": [\n        { \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 185 },\n        { \"type\": \"FOOD\", \"name\": \"Combo 2\", \"price\": 125 },\n        { \"type\": \"SNACKS\", \"name\": \"Combo 2\", \"price\": 220 }\n    ],\n     \"total\": 205.00,\n    \"status\": \"PENDING\",\n    \"created_at\": \"2026-10-28T00:17:56\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update - success",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        { \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 185 },\n        { \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 56 }\n    ],\n    \"status\": \"CONFIRMED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/9b46d52c-241c-4633-b223-5e58749ae18a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"9b46d52c-241c-4633-b223-5e58749ae18a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update - success - 2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        { \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 185 },\n        { \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 56 },\n        { \"type\": \"SNACKS\", \"name\": \"Combo 2\", \"price\": 220 }\n    ],\n    \"status\": \"PENDING\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/68fdaad7-97e0-4ce9-b795-c5f0d65ed69d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"68fdaad7-97e0-4ce9-b795-c5f0d65ed69d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update - invalidStatus",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\": [\n        { \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 185 },\n        { \"type\": \"FOOD\", \"name\": \"Combo 2\", \"price\": 125 }\n    ],\n    \"status\": \"CONFIRM\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/9b46d52c-241c-4633-b223-5e58749ae18a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"9b46d52c-241c-4633-b223-5e58749ae18a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-id - validationError - 1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-id - success",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/68fdaad7-97e0-4ce9-b795-c5f0d65ed69d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"68fdaad7-97e0-4ce9-b795-c5f0d65ed69d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-id - notFound",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/1a3bb2e0-8de8-4338-b245-58a3104d6d66",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"1a3bb2e0-8de8-4338-b245-58a3104d6d66"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-id - notFound - inCountry",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mz/orders/68fdaad7-97e0-4ce9-b795-c5f0d65ed69d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mz",
+						"orders",
+						"68fdaad7-97e0-4ce9-b795-c5f0d65ed69d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete - success",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/1a3bb2e0-8de8-4338-b245-58a3104d6d62",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"1a3bb2e0-8de8-4338-b245-58a3104d6d62"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete - notFound",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/1a3bb2e0-8de8-4338-b245-58a3104d6d66",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"1a3bb2e0-8de8-4338-b245-58a3104d6d66"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete - noPending",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"country\": \"MX\",\n\"cinema_id\": \"472\",\n\"user_id\": \"user-123\",\n\"items\": [\n{ \"type\": \"TICKET\", \"name\": \"Adulto\", \"price\": 85 },\n{ \"type\": \"FOOD\", \"name\": \"Combo 1\", \"price\": 120 }\n],\n\"total\": 205\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/countries/mx/orders/68fdaad7-97e0-4ce9-b795-c5f0d65ed69d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"countries",
+						"mx",
+						"orders",
+						"68fdaad7-97e0-4ce9-b795-c5f0d65ed69d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,8 @@
-package com.cinema.exception;
+package com.cinema.exception.constant;
 
+/**
+ * This is an interface with exception messages constants.
+ */
 public interface ExceptionMessages {
 
     String ORDER_NOT_FOUND = "Order '%s' not found for country '%s'";

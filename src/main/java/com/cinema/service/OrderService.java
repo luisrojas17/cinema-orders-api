@@ -1,6 +1,8 @@
 package com.cinema.service;
 
 import com.cinema.exception.*;
+import com.cinema.exception.constant.ExceptionMessages;
+import com.cinema.helper.OrderHelper;
 import com.cinema.model.request.CreateOrderRequest;
 import com.cinema.model.request.ItemRequest;
 import com.cinema.model.request.UpdateOrderRequest;
@@ -9,6 +11,7 @@ import com.cinema.model.ItemType;
 import com.cinema.model.Order;
 import com.cinema.model.OrderStatus;
 import com.cinema.repository.OrderRepository;
+import com.cinema.rules.OrderRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,37 +36,33 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private static final int MONEY_SCALE = 2;
+    private final OrderHelper orderHelper;
+
+    private final OrderRules orderRules;
 
     private final OrderRepository repository;
 
     public Order createOrder(String country, CreateOrderRequest request) {
-        List<Item> items = toItems(request.items());
-        requireTicket(items);
+        List<Item> items = orderHelper.toItems(request.items());
+        orderRules.requireTicket(items);
 
         Order order = new Order(
                 UUID.randomUUID().toString(),
-                normalizeCountry(country),
+                orderHelper.normalizeCountry(country),
                 String.valueOf(request.cinemaId()),
                 request.userId().trim(),
                 items,
-                calculateTotal(items),
+                orderRules.calculateTotal(items),
                 OrderStatus.PENDING,
                 LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return repository.save(order);
     }
 
-    /**
-     * Gets an order if this is found it. If the order is not found will be 404 if missing or country mismatch
-     *
-     * @param country
-     * @param orderId
-     *
-     * @return an instance of Order or
-     */
     public Order getOrder(String country, String orderId) {
-        String normalizedCountry = normalizeCountry(country);
-        return repository.findById(normalizeId(orderId))
+        String normalizedCountry = orderHelper.normalizeCountry(country);
+
+        // 404 if it is missing the order.
+        return repository.findById(orderHelper.normalizeId(orderId))
                 .filter(order -> order.getCountry().equals(normalizedCountry))
                 .orElseThrow(() -> new OrderNotFoundException(orderId, normalizedCountry));
     }
@@ -74,13 +73,13 @@ public class OrderService {
                     ExceptionMessages.AT_LEAST_ONE_ITEM_MUST_BE_PROVIDED);
         }
 
-        // 404 if missing or country mismatch
         Order existing = getOrder(country, orderId);
 
         List<Item> newItems = null;
         if (request.items() != null) {
-            newItems = toItems(request.items());
-            requireTicket(newItems);
+            newItems = orderHelper.toItems(request.items());
+
+            orderRules.requireTicket(newItems);
         }
 
         List<Item> items = newItems;
@@ -90,7 +89,7 @@ public class OrderService {
                         current.getCinemaId(),
                         current.getUserId(),
                         items != null ? items : current.getItems(),
-                        items != null ? calculateTotal(items) : current.getTotal(),
+                        items != null ? orderRules.calculateTotal(items) : current.getTotal(),
                         request.status() != null ? request.status() : current.getStatus(),
                         current.getCreatedAt()))
                 .orElseThrow(() -> new OrderNotFoundException(orderId, existing.getCountry()));
@@ -105,30 +104,4 @@ public class OrderService {
         }
     }
 
-    private List<Item> toItems(List<ItemRequest> requests) {
-        return requests.stream()
-                .map(r -> new Item(r.type(), r.name().trim(), r.price().setScale(MONEY_SCALE, RoundingMode.UNNECESSARY)))
-                .toList();
-    }
-
-    private void requireTicket(List<Item> items) {
-        if (items.stream().noneMatch(item -> item.getType() == ItemType.TICKET)) {
-            throw new InvalidOrderException(ExceptionMessages.A_TICKET_IS_REQUIRED);
-        }
-    }
-
-    private BigDecimal calculateTotal(List<Item> items) {
-        return items.stream()
-                .map(Item::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .setScale(MONEY_SCALE, RoundingMode.HALF_UP);
-    }
-
-    public String normalizeCountry(String country) {
-        return country.trim().toUpperCase(Locale.ROOT);
-    }
-
-    public String normalizeId(String orderId) {
-        return orderId.trim().toLowerCase(Locale.ROOT);
-    }
 }

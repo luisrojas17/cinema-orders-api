@@ -1,5 +1,9 @@
 package com.cinema.constant;
 
+/**
+ * This is an interface with validation messages constants used by validation layer
+ * the in controller.
+ */
 public interface ValidationMessages {
     String COUNTRY_MESSAGE = "Must be a 2-letter country code (e.g. MX)";
     String UUID_MESSAGE = "Must be a valid UUID";

@@ -1,5 +1,6 @@
 package com.cinema.service;
 
+import com.cinema.helper.OrderHelper;
 import com.cinema.model.request.CreateOrderRequest;
 import com.cinema.model.request.ItemRequest;
 import com.cinema.model.request.UpdateOrderRequest;
@@ -11,6 +12,7 @@ import com.cinema.model.ItemType;
 import com.cinema.model.Order;
 import com.cinema.model.OrderStatus;
 import com.cinema.repository.OrderRepository;
+import com.cinema.rules.OrderRules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +28,8 @@ class OrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new OrderService(new OrderRepository());
+        service =
+                new OrderService(new OrderHelper(), new OrderRules(), new OrderRepository());
     }
 
     private static ItemRequest ticket(String price) {
