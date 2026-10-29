@@ -52,7 +52,7 @@ src/main/java/com/cinema
 │   └── OrderController.java           # endpoints REST y códigos HTTP
 ├── exception/
 │   ├── GlobalExceptionHandler.java    # @RestControllerAdvice
-│   ├── (OrderNotFound | OrderNotDeletable | InvalidOrder | InvalidRequest)Exception.java
+│   ├── (OrderNotFound | OrderNotDeletable | InvalidOrder | InvalidRequest | BusinessException)Exception.java
 │   └── model/                         # estructura de la respuesta de error
 │       ├── ApiError.java
 │       └── ErrorDetail.java

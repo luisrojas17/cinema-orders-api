@@ -1,5 +1,6 @@
 package com.cinema.challenge;
 
+import com.cinema.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,27 +61,27 @@ class DiscountCalculatorAdditionalTest {
         int[] oneDiscount = {1};
 
         // null arguments
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(null, oneCombo, oneDiscount));
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(new String[]{null}, oneCombo, oneDiscount));
         // purchased.length <= 50
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(new String[51], oneCombo, oneDiscount));
         // 1 <= combos.length <= 10
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(oneProduct, new String[0][], new int[0]));
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(oneProduct, new String[11][], new int[11]));
         // 1 <= combos[i].length <= 5
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(oneProduct, new String[][]{{}}, oneDiscount));
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(BusinessException.class,
                 () -> calculator.maxDiscount(
                         oneProduct,
                         new String[][]{{"soda", "soda", "soda", "soda", "soda", "soda"}}, oneDiscount));
         // discounts.length == combos.length
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(BusinessException.class, () ->
                 calculator.maxDiscount(oneProduct, oneCombo, new int[]{1, 2}));
     }
 }

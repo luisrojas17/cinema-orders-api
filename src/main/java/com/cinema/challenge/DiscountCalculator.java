@@ -1,5 +1,10 @@
 package com.cinema.challenge;
 
+import com.cinema.exception.InvalidComboException;
+import com.cinema.exception.InvalidDiscountArgumentException;
+import com.cinema.exception.InvalidDiscountException;
+import com.cinema.exception.InvalidProductException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,37 +82,45 @@ public class DiscountCalculator {
      * @param discounts an array with discounts by combo to apply.
      */
     private void constraints(String[] purchased, String[][] combos, int[] discounts) {
+
         if (purchased == null || combos == null || discounts == null) {
-            throw new IllegalArgumentException("purchased, combos and discounts must not be null");
+            //throw new IllegalArgumentException("purchased, combos and discounts must not be null");
+            throw new InvalidDiscountArgumentException("Purchased, combos and discounts must not be null");
         }
 
         if (purchased.length > MAX_PURCHASED) {
-            throw new IllegalArgumentException("purchased must have at most " + MAX_PURCHASED + " products");
+            //throw new IllegalArgumentException("purchased must have at most " + MAX_PURCHASED + " products");
+            throw new InvalidProductException("Purchased must have at most " + MAX_PURCHASED + " products");
         }
 
         for (String product : purchased) {
             if (product == null) {
-                throw new IllegalArgumentException("purchased must not contain null products");
+                //throw new IllegalArgumentException("purchased must not contain null products");
+                throw new InvalidProductException("Purchased must not contain null products");
             }
         }
 
         if (combos.length < 1 || combos.length > MAX_COMBOS) {
-            throw new IllegalArgumentException("combos must have between 1 and " + MAX_COMBOS + " entries");
+            //throw new IllegalArgumentException("combos must have between 1 and " + MAX_COMBOS + " entries");
+            throw new InvalidComboException("Combos must have between 1 and " + MAX_COMBOS + " entries");
         }
 
         if (discounts.length != combos.length) {
-            throw new IllegalArgumentException("discounts must have the same length as combos");
+            //throw new IllegalArgumentException("discounts must have the same length as combos");
+            throw new InvalidDiscountException("Discounts must have the same length as combos");
         }
 
         for (String[] combo : combos) {
             if (combo == null || combo.length < 1 || combo.length > MAX_COMBO_SIZE) {
-                throw new IllegalArgumentException(
-                        "each combo must have between 1 and " + MAX_COMBO_SIZE + " products");
+                //throw new IllegalArgumentException(
+                  //      "each combo must have between 1 and " + MAX_COMBO_SIZE + " products");
+                throw new InvalidComboException("Each combo must have between 1 and " + MAX_COMBO_SIZE + " products");
             }
 
             for (String product : combo) {
                 if (product == null) {
-                    throw new IllegalArgumentException("a combo must not contain null products");
+                    //throw new IllegalArgumentException("a combo must not contain null products");
+                    throw new InvalidComboException("A combo must not contain null products");
                 }
             }
         }
