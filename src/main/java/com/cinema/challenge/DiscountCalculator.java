@@ -116,7 +116,7 @@ public class DiscountCalculator {
     /**
      * To get the number of products per category. For example:
      * <br/>
-     * Map<product, quantity> -> {soda=2, popcorn=1}
+     * {@code Map<product, quantity> -> {soda=2, popcorn=1}}
      *
      * @param products an array of products.
      *
@@ -165,7 +165,7 @@ public class DiscountCalculator {
         if (isAvailable(stock, need)) {                                 // the inventory has enough units to consume?
             adjust(stock, need, -1);                               // consume units
 
-            // To appy the discount sum of the combo according to best possible result
+            // To apply the discount sum of the combo according to best possible result
             best = Math.max(best, discounts[index] + search(index + 1, stock, required, discounts));
 
             // To restore the stock in order to the recursivity comes back.
